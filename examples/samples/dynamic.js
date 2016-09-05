@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import Swiper from '../swiper.dist'
+import Swiper from 'react-native-swiper'
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -48,18 +48,30 @@ export default class DynamicSample extends React.Component {
       items: [
         { title: 'Hello Swiper', css: styles.slide1 },
         { title: 'Beautiful', css: styles.slide2 },
-        { title: 'And simple', css: styles.slide3 }
+        { title: 'And simple', css: styles.slide3 },
+        { title: 'Hello Swiper', css: styles.slide1 },
+        { title: 'Beautiful', css: styles.slide2 },
+        { title: 'And simple', css: styles.slide3 },
+        { title: 'Hello Swiper', css: styles.slide1 },
+        { title: 'Beautiful', css: styles.slide2 },
+        { title: 'And simple', css: styles.slide3 },
+        { title: 'Hello Swiper', css: styles.slide1 },
+        { title: 'Beautiful', css: styles.slide2 },
+        { title: 'And simple', css: styles.slide3 },
       ]
     })
   }
 
   render() {
     return (
-      <Swiper showsButtons={true}>
+      <Swiper
+        horizontal={false}
+        onMomentumScrollEnd={()=>console.log('end\n')}
+        >
         {this.state.items.map((item, key) => {
           return (
             <View key={key} style={item.css}>
-              <Text style={styles.text}>{item.title}</Text>
+              <Text style={styles.text}>{`${item.title} => key: ${key}`}</Text>
             </View>
           )
         })}

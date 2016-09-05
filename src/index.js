@@ -287,16 +287,8 @@ module.exports = React.createClass({
       }
     }
 
-    this.updateIndex(e.nativeEvent.contentOffset, this.state.dir)
-
-    // Note: `this.setState` is async, so I call the `onMomentumScrollEnd`
-    // in setTimeout to ensure synchronous update `index`
-    this.setTimeout(() => {
-      this.autoplay()
-      this.loopJump();
-
-      // if `onMomentumScrollEnd` registered will be called here
-      this.props.onMomentumScrollEnd && this.props.onMomentumScrollEnd(e, this.state, this)
+    this.updateIndex(e.nativeEvent.contentOffset, this.state.dir, ()=> {
+      this.props.onMomentumScrollEnd && this.props.onMomentumScrollEnd(e, this.state, this);
     })
   },
 
@@ -323,7 +315,7 @@ module.exports = React.createClass({
    * @param  {object} offset content offset
    * @param  {string} dir    'x' || 'y'
    */
-  updateIndex(offset, dir) {
+  updateIndex(offset, dir, cb) {
 
     let state = this.state
     let index = state.index
@@ -356,7 +348,7 @@ module.exports = React.createClass({
       index: index,
       offset: offset,
       loopJump: loopJump,
-    })
+    }, cb);
   },
 
   /**
